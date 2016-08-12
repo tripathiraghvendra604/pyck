@@ -3,7 +3,7 @@
 
 import os
 from xlrd import open_workbook
-from .models import Info
+from .models import Area, Company, Delivery
 
 
 def open_excel():
@@ -28,25 +28,107 @@ def open_excel():
             pref4 = s.cell(row, col+12).value
             pref5 = s.cell(row, col+13).value
 
+            pin = Area.objects.get_or_create(pincode=pincode)
 
-            data = Info(
-                pincode=pincode,
-                delhivery=delhivery,
-                delhivery_limit=delhivery_limit,
-                fedex=fedex,
-                fedex_limit=fedex_limit,
-                dotzot=dotzot,
-                dotzot_limit=dotzot_limit,
-                dtdc=dtdc,
-                indiapost=indiapost,
-                pref1=pref1,
-                pref2=pref2,
-                pref3=pref3,
-                pref4=pref4,
-                pref5=pref5,
-            )
-            data.save()
+            if delhivery == 'Y':
+                comp_d = Company.objects.get(name='Delhivery')
+                if pref1 == comp_d.name:
+                    prefrence = 1
+                elif pref2 == comp_d.name:
+                    prefrence = 2
+                elif pref3 == comp_d.name:
+                    prefrence = 3
+                elif pref4 == comp_d.name:
+                    prefrence = 4
+                else:
+                    prefrence = 5
 
+                delhivery_data = Delivery.objects.get_or_create(
+                    pincode = pin[0],
+                    company = comp_d,
+                    price = delhivery_limit,
+                    prefrence= prefrence
+                )
+
+            if fedex == 'Y':
+                comp_d = Company.objects.get(name='Fedex')
+                if pref1 == comp_d.name:
+                    prefrence = 1
+                elif pref2 == comp_d.name:
+                    prefrence = 2
+                elif pref3 == comp_d.name:
+                    prefrence = 3
+                elif pref4 == comp_d.name:
+                    prefrence = 4
+                else:
+                    prefrence = 5
+
+                fedex_data = Delivery.objects.get_or_create(
+                    pincode=pin[0],
+                    company=comp_d,
+                    price=fedex_limit,
+                    prefrence=prefrence
+                )
+
+            if dotzot == 'Y':
+                comp_d = Company.objects.get(name='Dotzot')
+                if pref1 == comp_d.name:
+                    prefrence = 1
+                elif pref2 == comp_d.name:
+                    prefrence = 2
+                elif pref3 == comp_d.name:
+                    prefrence = 3
+                elif pref4 == comp_d.name:
+                    prefrence = 4
+                else:
+                    prefrence = 5
+
+                dotzot_data = Delivery.objects.get_or_create(
+                    pincode=pin[0],
+                    company=comp_d,
+                    price=dotzot_limit,
+                    prefrence=prefrence
+                )
+
+            if dtdc == 'Y':
+                comp_d = Company.objects.get(name='DTDC')
+                if pref1 == comp_d.name:
+                    prefrence = 1
+                elif pref2 == comp_d.name:
+                    prefrence = 2
+                elif pref3 == comp_d.name:
+                    prefrence = 3
+                elif pref4 == comp_d.name:
+                    prefrence = 4
+                else:
+                    prefrence = 5
+
+                dtdc_data = Delivery.objects.get_or_create(
+                    pincode=pin[0],
+                    company=comp_d,
+                    price=0,
+                    prefrence=prefrence
+                )
+
+            if indiapost == 'Y':
+                comp_d = Company.objects.get(name='Indiapost')
+                if pref1 == comp_d.name:
+                    prefrence = 1
+                elif pref2 == comp_d.name:
+                    prefrence = 2
+                elif pref3 == comp_d.name:
+                    prefrence = 3
+                elif pref4 == comp_d.name:
+                    prefrence = 4
+                else:
+                    prefrence = 5
+
+                indiapost_data = Delivery.objects.get_or_create(
+                    pincode=pin[0],
+                    company=comp_d,
+                    price=0,
+                    prefrence=prefrence
+                )
 
 
 open_excel()

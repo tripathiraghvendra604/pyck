@@ -9,13 +9,15 @@ class Area(models.Model):
     pincode = models.IntegerField()
 
     def __unicode__(self):
-        return self.pincode
+        return str(self.pincode)
+
 
 class Company(models.Model):
-    company = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __unicode__(self):
-        return self.company
+        return self.name
+
 
 class Delivery(models.Model):
     pincode = models.ForeignKey(Area)
@@ -24,4 +26,7 @@ class Delivery(models.Model):
     prefrence = models.IntegerField()
 
     class Meta:
-        ordering = ['-prefrence']
+        ordering = ['prefrence']
+
+    def __unicode__(self):
+        return str(self.pincode)

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Info
+from .models import Area, Company, Delivery
 # Register your models here.
 
-admin.site.register(Info)
+admin.site.register(Area)
+admin.site.register(Company)
+admin.site.register(Delivery)
